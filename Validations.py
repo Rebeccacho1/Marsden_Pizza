@@ -2,7 +2,7 @@ def validate_string(m, min, max):
     while True:
         get_string = input(m)
         if len(get_string) < min:
-            print("There's too little words")
+            print("There are no pizzas with the length of the ")
         elif len(get_string) > max:
             print("There's too many words")
         else:
