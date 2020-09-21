@@ -1,6 +1,5 @@
-
-
-
+"""Fruitbowl management program"""
+from Validations import validate_one_char, validate_string, validate_integer
 
 def get_integer(m):
     my_integer = int(input(m))
@@ -21,7 +20,7 @@ def review_order(o):
     if len(o) != 0:
         print("The customer has ordered: ")
         for i in range(0, len(o)):
-            output = "{:^5} {} Pizzas --- ${}".format(o[i][0], o[i][1], o[i][2])
+            output = "{:12} {} Pizzas --- ${}".format(o[i][0], o[i][1], o[i][2])
             print(output)
     else:
         print("Customer has not ordered anything yet")
@@ -29,11 +28,11 @@ def review_order(o):
 def customers_order(m, o):
     cont = "y"
     while cont == "y":
-        pizza_name = get_string("What type of pizza did you want to add? -> ")
+        pizza_name = validate_string("What type of pizza did you want to add? -> ", 6, 10)
         pizza_price = 0
         result = search_pizza(m, pizza_name)
         if result is not None:
-            quantity_pizza = get_integer("How many pizzas did you want to add? -> ")
+            quantity_pizza = validate_integer("How many pizzas did you want to add? -> ", 1, 15)
             pizza_name = result[0]
             pizza_price = result[1]
             o.append([quantity_pizza, pizza_name, pizza_price])
@@ -50,13 +49,62 @@ def search_pizza(m,o):
             return name, price
     return None
 
+def change_quantity(o):
+    for i in range (0, len(o)):
+        output = "{:3} : {:^13} {}".format(i+1, o[i][0], o[i][1])
+        print(output)
+    choice_number =  validate_integer("Please enter the choice number to update the quantity? ", 1, 4)
+    choice_number = choice_number - 1
+    new_quantity = validate_integer("Please enter the new quantity: -> ", 1, 15)
+    old_quantity = o[choice_number][1]
+    o[choice_number][1] = new_quantity
+    output_message = "The quantity of {} pizza has now changed from {} to {}.".format(o[choice_number][0], old_quantity, new_quantity)
+    print(output_message)
+
+def update_order(o):
+    update_function = [
+        ("R", "Review Order"),
+        ("C", "Change Order Quantity"),
+        ("D", "Delete Pizza"),
+        ("E", "Go back to Main Menu")
+    ]
+
+    one_char_list = ["C", "D", "E"]
+    c = "What type of update function did you want? "
+
+    run = True
+    while run is True:
+        for i in range(0, len(update_function)):
+            print("{} : {}".format(update_function[i][0], update_function[i][1]))
+        choices = validate_one_char(c, one_char_list)
+        if choices == "R":
+            print("Review Customer's Order")
+            print("-" * 23)
+            review_order(o)
+            print("=" * 60)
+        elif choices == "C":
+            print("Change Order Quantity ")
+            print("-" * 23)
+            change_quantity(o)
+            print("=" * 60)
+        elif choices == "D":
+            print("Delete Order")
+            print("-" * 23)
+            print("You have chosen the letter D")
+            print("=" * 60)
+        else:
+            print("--- Returning to Main Menu ---")
+            print("=" * 60)
+            run = False
+
 def main():
-    print("Main Menu")
+    print("Welcome to Marsden Pizza :)")
     functions = [
-        ("1", "Pizza Menu"),
-        ("2", "Review Customer's Order"),
-        ("3", "Order"),
-        ("Q", "Quit")
+        ("M", "Pizza Menu"),
+        ("R", "Review Customer's Order"),
+        ("U", "Update Order"),
+        ("O", "Add to Order"),
+        ("C", "Cancel")
     ]
 
     menu = [
@@ -66,22 +114,37 @@ def main():
         ("Margherita", 4.00)
     ]
 
+    one_char_list = ["M", "R", "O", "U", "C", "Q"]
+    m = "Please enter menu option or enter 'C' to cancel the order -> "
+
     order = []
+    order_test = [
+        ["Cheese", 3, 9.00],
+        ["Pepperoni", 4, 7.00],
+        ["Margherita", 1, 4.00]
+    ]
+    order=order_test
+
     run = True
     while run is True:
         for i in range(0, len(functions)):
             print("{} : {}".format(functions[i][0], functions[i][1]))
-        option = get_string("Choose the options by number or enter 'C' to cancel the order -> ")
+        option = validate_one_char(m, one_char_list)
         print("=" * 60)
-        if option == "1":
+        if option == "M":
             review_menu(menu)
             print("=" * 60)
-        elif option == "2":
+        elif option == "R":
             print("Review Customer's Order")
             print("-" * 23)
             review_order(order)
             print("=" * 60)
-        elif option == "3":
+        elif option == "U":
+            review_order(order)
+            print("=" * 60)
+            update_order(order)
+
+        elif option == "O":
             review_menu(menu)
             print("=" * 60)
             customers_order(menu, order)
