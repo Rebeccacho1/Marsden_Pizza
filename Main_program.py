@@ -85,16 +85,25 @@ def delete_pizza(o):
                 print("=" * 60)
                 review_order(o)
             elif delete_option == "REMOVE":
-                chosen_number = validate_integer("Please enter the choice number to delete the pizza? ", 1, 50)
-                # the choice number is up to 1 to 4. - you can change it anytime
-                chosen_number = chosen_number - 1
-                o.pop(chosen_number)
-                print("The {} pizza is being removed".format(o[chosen_number][1]))
+                get_deletions = True
+                while get_deletions:
+                    chosen_number = validate_integer("Please enter the choice number to delete the pizza? ", 1, len(o))
+                    chosen_number = chosen_number - 1
+                    print("The {} pizza is being removed".format(o[chosen_number][1]))
+                    o.pop(chosen_number)
+                    repeat_delete = True
+                    while repeat_delete is True:
+                        another_delete = validate_string("Would you like to delete another pizza? (Yes/No) ", 2, 3).upper()
+                        if another_delete == "YES":
+                            repeat_delete = False
+                        elif another_delete == "NO":
+                            return None
+                        else:
+                            print("Your answer is incorrect. Please try again")
             else:
                 print("Your answer is incorrect please try again")
         else:
             return
-
 
 def update_order(o):
     update_function = [
@@ -133,8 +142,44 @@ def update_order(o):
             print("=" * 60)
             run = False
 
+def customer_details(c):
+    user_name = validate_string("What is the name for your order -> ", 3, 10)
+    phone_number = validate_string("Phone number - ", 5, 20)
+    run = True
+    while run is True:
+        receive_order = validate_string("How are you going to receive your order?\n"
+                                        "- Deliver or Pick Up --> ", 6, 7).upper()
+        print("=" * 60)
+        if receive_order == "DELIVER":
+            print("$3 is going to be charged for delivery")
+            street_number = validate_string("Please enter your street number - ", 1, 4)
+            street_name = validate_string("Street Name - ", 2, 100)
+            suburb = validate_string("Suburb - ", 2, 100)
+            postcode = validate_string("Postcode - ", 2, 100)
+            print("=" * 60)
+            c.append([user_name, phone_number, street_number, street_name, suburb, postcode])
+            print("--- Please check the following details with the customer ---")
+            print("             Order for: {}".format(c[0][0]))
+            print("          Phone Number: {}".format(c[0][1]))
+            print("Street Number & Number: {} {},".format(c[0][2], c[0][3]))
+            print("    Suburb & Postcode : {}, {}".format(c[0][4], c[0][5]))
+            print("=" * 60)
+            return street_number, street_name, suburb, postcode
+        elif receive_order in ["PICK UP" ,"PICKUP"]:
+            c.append([user_name, phone_number])
+            print("--- Please check the following details with the customer ---")
+            print("   Order for: {}".format(c[0][0]))
+            print("Phone Number: {}".format(c[0][1]))
+            print("=" * 60)
+            return
+        else:
+            print("Please try again. I didn't get that")
+        continue
+
 def main():
     print("Welcome to Marsden Pizza :)")
+    customer_list = []
+    customer_details(customer_list)
     functions = [
         ("M", "Pizza Menu"),
         ("R", "Review Customer's Order"),
@@ -147,7 +192,7 @@ def main():
         ("CHEESE", 9.0),
         ("HAWAIIAN", 10.0),
         ("PEPPERONI", 7.0),
-        ("MARGHERITA", 4.0)
+        ("MARGHERITA", 4.0),
     ]
 
     one_char_list = ["M", "R", "O", "U", "C", "Q"]
