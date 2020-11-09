@@ -390,7 +390,7 @@ def complete_order(o, e):
                 row_cost = o[i][0] * o[i][2]
                 total_cost += row_cost
             gst = total_cost*(3/23)
-            # Prints out the reciept
+            # Prints out the receipt
             print("=" * 70)
             print("--- This is the receipt for the customer ---")
             print("-" * 70)
@@ -454,10 +454,16 @@ def main():
     ]
 
     menu = [
-        ("CHEESE", 9.0),
-        ("HAWAIIAN", 10.0),
-        ("PEPPERONI", 7.0),
-        ("MARGHERITA", 4.0),
+        ("CHEESE", 18.50),
+        ("VEGGIE", 18.50),
+        ("CHICKEN", 18.50),
+        ("HAWAIIAN", 18.50),
+        ("BUFFALO", 18.50),
+        ("PEPPERONI", 21.50),
+        ("SUPREME", 21.50),
+        ("MEAT", 21.50),
+        ("MARGHERITA", 21.50),
+        ("STUFFED", 21.50)
     ]
 
     one_char_list = ["M", "R", "U", "A", "F", "C"]

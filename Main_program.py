@@ -118,7 +118,6 @@ def delete_pizza(o):
                 print("=" * 70)
                 print("--- Order is being erased ---")
                 print("=" * 70)
-                review_order(o)
             # Delete option to remove the whole order
             elif delete_option == "REMOVE":
                 get_deletions = True
@@ -147,6 +146,7 @@ def delete_pizza(o):
             else:
                 print("Your answer is incorrect please try again")
         else:
+            print("Customer has not ordered anything yet")
             return
 
 
@@ -375,7 +375,7 @@ def complete_order(o, e, c):
                 row_cost = o[i][0] * o[i][2]
                 total_cost += row_cost
             gst = total_cost*(3/23)
-            # Prints out the reciept
+            # Prints out the receipt
             print("=" * 70)
             print("--- This is the receipt for the customer ---")
             print("-" * 70)
@@ -484,7 +484,7 @@ def customer_details(c):
 
 
 def main():
-   """Choose the main menu function.
+    """Choose the main menu function.
 
     ask for user input.
     if input is M, review menu.
@@ -496,70 +496,69 @@ def main():
 
     :return: None
     """
-print("Welcome to Marsden Pizza :)")
-# The different types of lists that is used through out the program
-customer_list = []
-extras = customer_details(customer_list)
+    print("Welcome to Marsden Pizza :)")
+    # The different types of lists that is used through out the program
+    customer_list = []
+    extras = customer_details(customer_list)
 
-functions = [
-    ("M", "Pizza Menu"),
-    ("R", "Review Customer's Order"),
-    ("U", "Update Order"),
-    ("A", "Add to Order"),
-    ("F", "Finish/Complete Order"),
-    ("C", "Cancel")
+    functions = [
+        ("M", "Pizza Menu"),
+        ("R", "Review Customer's Order"),
+        ("U", "Update Order"),
+        ("A", "Add to Order"),
+        ("F", "Finish/Complete Order"),
+        ("C", "Cancel")
     ]
 
-menu = [
-    ("CHEESE", 18.50),
-    ("VEGGIE", 18.50),
-    ("CHICKEN", 18.50),
-    ("HAWAIIAN", 18.50),
-    ("BUFFALO", 18.50),
-    ("----------", 00.00),
-    ("PEPPERONI", 21.50),
-    ("SUPREME", 21.50),
-    ("MEAT", 21.50),
-    ("MARGHERITA", 21.50),
-    ("STUFFED", 21.50)
+    menu = [
+        ("CHEESE", 18.50),
+        ("VEGGIE", 18.50),
+        ("CHICKEN", 18.50),
+        ("HAWAIIAN", 18.50),
+        ("BUFFALO", 18.50),
+        ("PEPPERONI", 21.50),
+        ("SUPREME", 21.50),
+        ("MEAT", 21.50),
+        ("MARGHERITA", 21.50),
+        ("STUFFED", 21.50)
     ]
 
-one_char_list = ["M", "R", "U", "A", "F", "C"]
-m = "Please enter menu option or enter 'C' to cancel the order -> "
+    one_char_list = ["M", "R", "U", "A", "F", "C"]
+    m = "Please enter menu option or enter 'C' to cancel the order -> "
 
-order = []
+    order = []
 
-run = True
-while run is True:
-    for i in range(0, len(functions)):
-        # Format of what the function menu looks like. Numbers: Functions
-        print("{} : {}".format(functions[i][0], functions[i][1]))
-    option = validate_one_char(m, one_char_list)
-    print("=" * 70)
-    # The different options that the user can click onto
-    if option == "M":
-        review_menu(menu)
+    run = True
+    while run is True:
+        for i in range(0, len(functions)):
+            # Format of what the function menu looks like. Numbers: Functions
+            print("{} : {}".format(functions[i][0], functions[i][1]))
+        option = validate_one_char(m, one_char_list)
         print("=" * 70)
-    elif option == "R":
-        print("Review Customer's Order")
-        print("-" * 23)
-        review_order(order)
-        print("=" * 70)
-    elif option == "U":
-        update_order(order)
-    elif option == "A":
-        review_menu(menu)
-        print("=" * 70)
-        customers_order(menu, order)
-        print("=" * 70)
-    elif option == "F":
-        complete_order(order, extras, customer_list)
-    elif option == "C":
-        print("Thank You!")
-        run = False
-    else:
-        print("Invalid Entry")
-        print("=" * 70)
+        # The different options that the user can click onto
+        if option == "M":
+            review_menu(menu)
+            print("=" * 70)
+        elif option == "R":
+            print("Review Customer's Order")
+            print("-" * 23)
+            review_order(order)
+            print("=" * 70)
+        elif option == "U":
+            update_order(order)
+        elif option == "A":
+            review_menu(menu)
+            print("=" * 70)
+            customers_order(menu, order)
+            print("=" * 70)
+        elif option == "F":
+            complete_order(order, extras, customer_list)
+        elif option == "C":
+            print("Thank You!")
+            run = False
+        else:
+            print("Invalid Entry")
+            print("=" * 70)
 
 
 if __name__ == "__main__":
