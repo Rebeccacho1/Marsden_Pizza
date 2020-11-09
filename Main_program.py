@@ -230,7 +230,7 @@ def duplicate(o, pizza_name):
     """Check for any duplicates.
 
     :param o: list of customer's order, sub-list is [empty or int, str, int]
-    :param pizza_name: Dp
+    :param pizza_name: name of pizzas, sub-list is [str]
     :return: bool [True or False]
     """
     choice = ""
@@ -275,7 +275,7 @@ def customers_order(m, o):
     while run is True:
         # The program asks questions to the user. The answers are then stored
         # into a list named 'order'
-        pizza_name = validate_string("What type of pizza did you want "
+        pizza_name = validate_string("What type of pizza would you like "
                                      "to add? -> ", 4, 10).upper()
         pizza_price = 0
         result = search_pizza(m, pizza_name)
@@ -356,7 +356,7 @@ def complete_order(o, e, c):
     return to main menu.
 
     :param o: list of customer's , sub-list is [empty or int, str, int]
-    :param e: int
+    :param e: extra cost, sub-list is [int]
     :param c: customer order details
     :return: None
 
