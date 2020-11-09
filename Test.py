@@ -64,8 +64,7 @@ def duplicate(o, pizza_name):
             elif choice is ["NO", "N"]:
                 return False
         else:
-            return None
-    print("loop ended")
+            print("Something has gone wrong. Please try again.")
 
 
 
